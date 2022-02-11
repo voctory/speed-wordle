@@ -2,15 +2,30 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class Guessing {
-    private static String chosenWord;
-    private static ArrayList<String> chosenWordLetters;
-    private static WordHistory wordHistory;
+    private String chosenWord;
+    private ArrayList<String> chosenWordLetters;
+    private WordHistory wordHistory;
+
+    // This list can be massively expanded on with data imports during Phase 2.
+    private static final List<String> wordList = Arrays.asList(
+            "which", "whose", "there", "their", "about", "would", "these",
+            "other", "words", "could", "write", "first", "water", "after");
+
+    // ANSI colours referenced from the following:
+    // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
 
     public Guessing() {
         // TODO: import random, but valid 5 letter words. perhaps another library?
-        this.chosenWord = "whose";
+        Random rand = new Random();
+        this.chosenWord = wordList.get(rand.nextInt(wordList.size()));;
         this.chosenWordLetters = stringToArrayList(chosenWord);
         wordHistory = new WordHistory();
     }
@@ -20,7 +35,7 @@ public class Guessing {
         this.chosenWord = chosenWord;
     }
 
-    public static boolean isValid(String guess) {
+    public boolean isValid(String guess) {
         // cannot check isValid in Phase 1 of the project; will need to import text file data
         if (guess.length() != 5) {
             return false;
@@ -29,7 +44,7 @@ public class Guessing {
     }
 
     // REQUIRES: guessed word "guess" is not an exact match to the word
-    public static void inaccuracy(String guess) {
+    public void inaccuracy(String guess) {
         String outcome = compareStringArrays(guess);
         // add to the word history
         wordHistory.addToHistory(outcome);
@@ -37,14 +52,14 @@ public class Guessing {
     }
 
     // EFFECTS: check if the user's guess was correct; if it was, return true. otherwise, false.
-    public static boolean isCorrect(String guess) {
+    public boolean isCorrect(String guess) {
         if (guess.equals(chosenWord)) {
             return true;
         }
         return false;
     }
 
-    public static String compareStringArrays(String guess) {
+    public String compareStringArrays(String guess) {
         String output = "";
         ArrayList<String> characters = stringToArrayList(guess);
         for (int i = 0; i < characters.size(); i++) {
@@ -52,22 +67,21 @@ public class Guessing {
             String character = characters.get(i);
             String chosenWordCharacter = chosenWordLetters.get(i);
             if (character.equals(chosenWordCharacter)) {
-                output = output + " !" + character + "! ";
+                output = output + ANSI_GREEN + character + ANSI_RESET;
             } else if (chosenWordLetters.contains(character)) {
                 // check if string exists in ArrayList.
                 // in this case, .contains() checks for equality and NOT identity
-                output = output + " /" + character + "/ ";
+                output = output + ANSI_YELLOW + character + ANSI_RESET;
             } else if (!character.equals(chosenWordCharacter)) {
-                output = output + " *" + character + "* ";
+                output = output + ANSI_RED + character + ANSI_RESET;
             }
         }
         return output;
     }
 
-    private static ArrayList<String> stringToArrayList(String word) {
+    private ArrayList<String> stringToArrayList(String word) {
         String[] split = word.split("");
-        ArrayList<String> characters = new ArrayList<>(Arrays.asList(split));
-        return characters;
+        return new ArrayList<>(Arrays.asList(split));
     }
 
 

@@ -27,19 +27,30 @@ public class WordApp {
 
         // In the "main menu", confirm if the user is ready to start a game.
         while (true) {
-            System.out.println("The timer will immediately start. Are you ready? (Y / any key to quit)");
+            String intro = "The timer will immediately start. Ready? ('y' to start' / 'i' for help / any key to quit)";
+            System.out.println(intro);
             operation = input.nextLine();
-            System.out.println("you selected: " + operation);
+            System.out.println("You selected: " + operation + "\n");
 
             if (operation.equalsIgnoreCase("Y") || operation.equalsIgnoreCase("yes")) {
                 activateGame();
                 getWordInputs();
+            } else if (operation.equalsIgnoreCase("i")) {
+                instructions();
             } else {
                 break;
             }
         }
 
         System.out.println("Come back anytime :)");
+    }
+
+    private void instructions() {
+        System.out.println("The goal: solve the word as quickly as possible. You are being timed!");
+        System.out.println("You can only enter 5-letter words! To exit a game, type 'exit'.");
+        System.out.println("Green letter: the letter is in the correct place!");
+        System.out.println("Yellow letter: the letter exists in the word, but it is not in the correct place.");
+        System.out.println("Red letter: the letter does not exist in the word :(\n");
     }
 
     private void getWordInputs() {
@@ -61,8 +72,8 @@ public class WordApp {
                 } else {
                     guesses.inaccuracy(guess);
                 }
+                display();
             }
-            display();
         }
     }
 
