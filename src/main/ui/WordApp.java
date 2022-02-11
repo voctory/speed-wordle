@@ -2,27 +2,28 @@ package ui;
 
 import model.Timer;
 import model.Guessing;
-import model.WordHistory;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WordApp {
-    private Scanner input;
+    private final Scanner input;
     private boolean gameActive;
     private Guessing guesses;
     private Timer timer;
 
-    // EFFECTS: runs the word guessing application
+    // Constructor
+    // EFFECTS: creates a console scanner, confirms initialization, and redirects to the mainMenu method
     public WordApp() {
         input = new Scanner(System.in);
-        System.out.println("MOTUS Word App initialized.");
+        System.out.println("MOTUS Word App initialized!");
         mainMenu();
     }
 
-    // Inspired by lecture lab: Logging Calculator
+    // Inspired by lecture lab: B04 Logging Calculator
     // MODIFIES: this
-    // EFFECTS: always checks for input when WordApp is initialized, not in a game
+    // EFFECTS: always checks for input operation (true loop) when WordApp is initialized while user not in a game,
+    //   breaks out of loop when user does not want to run the application anymore and says goodbye
     private void mainMenu() {
         String operation;
 
@@ -46,6 +47,7 @@ public class WordApp {
         System.out.println("Come back anytime :)");
     }
 
+    // EFFECTS: prints instructions for user to play the game when requested
     private void instructions() {
         System.out.println("The goal: solve the word as quickly as possible. You are being timed!");
         System.out.println("You can only enter 5-letter words! To exit a game, type 'exit'.");
@@ -54,6 +56,11 @@ public class WordApp {
         System.out.println("Red letter: the letter does not exist in the word :(\n");
     }
 
+    // REQUIRES: game is active
+    // MODIFIES: this
+    // EFFECTS: constantly checks for word input while game is active; if user wants to exit or types the correct
+    //   word, end the game. otherwise, check the word's inaccuracies given that it is 5 characters long
+    //   and print the word history
     private void getWordInputs() {
         System.out.println("Enter a 5-letter word to guess! Or to leave, type in 'exit'.");
         String guess;
@@ -78,19 +85,25 @@ public class WordApp {
         }
     }
 
+    // EFFECTS: for every word in the instantiated word history, print it out first (oldest) to last (newest)
     private void display() {
-        ArrayList<String> history = WordHistory.display();
+        ArrayList<String> history = guesses.display();
         for (String guess : history) {
             System.out.println(guess);
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the game to be active and instantiates new Guessing and Timer objects
     private void activateGame() {
         gameActive = true;
         guesses = new Guessing();
         timer = new Timer();
     }
 
+    // MODIFIES: this, Timer
+    // EFFECTS: ends the game if the user wants to exit or has correctly determined the word;
+    //   return the time taken and tell the user
     private void finishGame() {
         gameActive = false;
         String time = timer.stop();
