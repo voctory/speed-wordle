@@ -19,10 +19,10 @@ public class Guessing {
 
     // ANSI colours referenced from the following:
     // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
 
     // MODIFIES: this
     // EFFECTS: from the hard-coded words list, choose a random one and set it as the chosen word.
@@ -49,6 +49,11 @@ public class Guessing {
     // EFFECTS: getter for chosen word characters array list; used for JUnit tests
     public ArrayList<String> getChosenWordLetters() {
         return chosenWordLetters;
+    }
+
+    // EFFECTS: getter for local word history; used for JUnit tests
+    public WordHistory getWordHistory() {
+        return wordHistory;
     }
 
     // EFFECTS: getter for comparing a guessed word to the allotted word length
