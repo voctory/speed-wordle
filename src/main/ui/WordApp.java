@@ -11,6 +11,7 @@ public class WordApp {
     private Scanner input;
     private boolean gameActive;
     private Guessing guesses;
+    private Timer timer;
 
     // EFFECTS: runs the word guessing application
     public WordApp() {
@@ -87,12 +88,12 @@ public class WordApp {
     private void activateGame() {
         gameActive = true;
         guesses = new Guessing();
-        Timer.start();
+        timer = new Timer();
     }
 
     private void finishGame() {
         gameActive = false;
-        String time = Timer.stop();
+        String time = timer.stop();
         System.out.println("Your time was: " + time);
         System.out.println("We'd love to play another game with you!\n");
     }
