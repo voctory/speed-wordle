@@ -39,15 +39,15 @@ class GuessingTest {
     public void testInaccuracy() {
         // only need to check that the string is stored properly.
         WordHistory wordHistory = guess.getWordHistory();
-        assertEquals(0, wordHistory.getHistory().size());
+        assertEquals(0, wordHistory.display().size());
 
         guess.inaccuracy("waldo");
 
         // compare array lists
-        assertEquals(1, wordHistory.getHistory().size());
+        assertEquals(1, wordHistory.display().size());
 
         guess.inaccuracy("water");
-        assertEquals(2, wordHistory.getHistory().size());
+        assertEquals(2, wordHistory.display().size());
     }
 
     @Test
@@ -78,7 +78,6 @@ class GuessingTest {
 
     @Test
     public void testDisplay() {
-        // more rigorously tested in WordHistoryTest
         ArrayList<String> output = new ArrayList<>();
         assertEquals(output, guess.display());
     }

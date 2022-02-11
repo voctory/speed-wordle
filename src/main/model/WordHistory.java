@@ -17,11 +17,6 @@ public class WordHistory {
         return history;
     }
 
-    // EFFECTS: getter for word history Array List; used for JUnit tests
-    public ArrayList<String> getHistory() {
-        return history;
-    }
-
     // MODIFIES: this
     // EFFECTS: setter to add a new colour-indicated guessed word to the array list
     public void addToHistory(String outcome) {
