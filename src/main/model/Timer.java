@@ -13,7 +13,7 @@ public class Timer {
     // MODIFIES: this
     // EFFECTS: calculates the time elapsed by subtracting the system finish time from the system begin time, then
     //    converts elapsed milliseconds to a human-readable string of the time taken
-    public String stop() {
+    public String getTimeElapsed() {
         long differenceMs = calculateTimeDelta();
 
         // Inspired by:
@@ -36,6 +36,4 @@ public class Timer {
         long current = System.currentTimeMillis();
         return current - this.time;
     }
-
-
 }

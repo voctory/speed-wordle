@@ -54,7 +54,8 @@ public class WordApp {
         System.out.println("You can only enter 5-letter words! To exit a game, type 'exit'.");
         System.out.println("Green letter: the letter is in the correct place!");
         System.out.println("Yellow letter: the letter exists in the word, but it is not in the correct place.");
-        System.out.println("Red letter: the letter does not exist in the word :(\n");
+        System.out.println("Red letter: the letter does not exist in the word :(");
+        System.out.println("And finally, if you would like to see the time elapsed during a game, enter 't'.\n");
     }
 
     // REQUIRES: game is active
@@ -76,7 +77,10 @@ public class WordApp {
                 System.out.println("Congrats!");
                 finishGame();
             } else {
-                if (!guesses.isValid(guess)) {
+                if (guess.equalsIgnoreCase("t") || guess.equalsIgnoreCase("time")) {
+                    String currentTime = timer.getTimeElapsed();
+                    System.out.println(currentTime);
+                } else if (!guesses.isValid(guess)) {
                     System.out.println("You did not enter a valid 5-letter word! Try again.");
                 } else {
                     guesses.inaccuracy(guess);
@@ -107,7 +111,7 @@ public class WordApp {
     //   return the time taken and tell the user
     private void finishGame() {
         gameActive = false;
-        String time = timer.stop();
+        String time = timer.getTimeElapsed();
         System.out.println("Your time was: " + time);
         System.out.println("We'd love to play another game with you!\n");
     }

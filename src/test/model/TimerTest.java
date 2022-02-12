@@ -20,10 +20,10 @@ class TimerTest {
     }
 
     @Test
-    public void testStop() {
+    public void testGetTimeElapsed() {
         // cannot test dynamic values of timer.
         // instead, ensure that the string is formatted
-        String answer = timer.stop();
+        String answer = timer.getTimeElapsed();
         assertTrue(answer.length() > 0);
     }
 }
