@@ -14,6 +14,12 @@ class TimerTest {
     }
 
     @Test
+    public void testConstructor() {
+        // indicates that a time was successfully declared
+        assertTrue(timer.getTime() > 0);
+    }
+
+    @Test
     public void testStop() {
         // cannot test dynamic values of timer.
         // instead, ensure that the string is formatted

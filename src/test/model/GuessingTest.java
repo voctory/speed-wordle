@@ -20,6 +20,19 @@ class GuessingTest {
     }
 
     @Test
+    public void testConstructor() {
+        // should have initialized an empty array for Word History
+        ArrayList<String> output = new ArrayList<>();
+        assertEquals(output, guess.display());
+
+        // should have chosen a random word of 5 characters, not empty
+        String word = guess.getChosenWord();
+        assertTrue(word.length() > 0);
+
+        assertFalse(word.length() == 0);
+    }
+
+    @Test
     public void testSetChosenWord() {
         // Confirm that the word can be changed
         String word = guess.getChosenWord();

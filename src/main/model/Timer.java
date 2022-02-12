@@ -26,7 +26,13 @@ public class Timer {
         return String.format("%02d:%02d:%02d.%d (h:m:s:ms)", hour, minute, second, millis);
     }
 
-    protected long calculateTimeDelta() {
+    // EFFECTS: returns time, for JUnit verification
+    public long getTime() {
+        return time;
+    }
+
+    // EFFECTS: returns difference between current time and instantiated time
+    private long calculateTimeDelta() {
         long current = System.currentTimeMillis();
         return current - this.time;
     }
