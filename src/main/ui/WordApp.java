@@ -6,6 +6,7 @@ import model.Guessing;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// UI class for the main console interaction, containing the game and main menus
 public class WordApp {
     private final Scanner input;
     private boolean gameActive;

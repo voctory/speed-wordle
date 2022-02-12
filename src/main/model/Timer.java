@@ -1,5 +1,6 @@
 package model;
 
+// Keeps track of the time elapsed when instantiated, returns string when stopped
 public class Timer {
     private long time;
 

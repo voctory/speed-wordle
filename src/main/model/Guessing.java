@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+// Chooses a random word and creates a WordHistory to compare and collect character similarities over time
 public class Guessing {
     private String chosenWord;
     private ArrayList<String> chosenWordLetters;
