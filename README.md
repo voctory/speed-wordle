@@ -4,6 +4,16 @@ Recklessly and arbitarily guessing words, this is beyond Wordle.
 
 Without a fixed number of tries, your only frame of reference is the clock. 🏃‍♂️⏰
 
+## Rationale
+
+- What will the application do? You can play Wordle without any restriction on how many guesses you're allowed.
+Instead, you are given a timer to look at.
+- Who will use it? Anyone who likes Wordle, but wants to play more casually (without guessing constraints)
+or even more competitively (trying to beat the clock).
+- Why is this project of interest to you? Wordle is (in)famous within online tech circles for being simple, yet
+perfectly apt for its casual use-case. I see a lot of potential to expand the Wordle concept,
+so I might as well try it out in CPSC210 :)
+
 ## User Stories
 
 - As a user, I want to be able to guess many words and have unlimited attempts.
