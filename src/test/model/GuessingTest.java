@@ -29,7 +29,7 @@ class GuessingTest {
         String word = guess.getChosenWord();
         assertTrue(word.length() > 0);
 
-        assertFalse(word.length() == 0);
+        assertNotEquals(0, word.length());
     }
 
     @Test
@@ -46,6 +46,31 @@ class GuessingTest {
         String[] split = word.split("");
         ArrayList<String> characters = guess.getChosenWordLetters();
         assertEquals(characters, new ArrayList<>(Arrays.asList(split)));
+    }
+
+    @Test
+    public void testSetWordHistoryEmpty() {
+        ArrayList<String> words = new ArrayList<>();
+        guess.setWordHistory(words);
+        assertEquals(0, guess.getWordHistory().display().size());
+    }
+
+    @Test
+    public void testSetWordHistoryOne() {
+        ArrayList<String> words = new ArrayList<>();
+        words.add("hello");
+        guess.setWordHistory(words);
+        assertEquals(1, guess.getWordHistory().display().size());
+    }
+
+    @Test
+    public void testSetWordHistoryGeneral() {
+        ArrayList<String> words = new ArrayList<>();
+        words.add("hello");
+        words.add("there");
+        words.add("world");
+        guess.setWordHistory(words);
+        assertEquals(3, guess.getWordHistory().display().size());
     }
 
     @Test
@@ -93,5 +118,27 @@ class GuessingTest {
     public void testDisplay() {
         ArrayList<String> output = new ArrayList<>();
         assertEquals(output, guess.display());
+    }
+
+    @Test
+    public void testGetChosenWord() {
+        String word = "water";
+        guess.setChosenWord("water");
+        assertEquals(word, guess.getChosenWord());
+
+        word = "there";
+        guess.setChosenWord("there");
+        assertEquals(word, guess.getChosenWord());
+    }
+
+    @Test
+    public void getChosenWordLetters() {
+        String word = "water";
+
+        String[] split = word.split("");
+        ArrayList<String> letters = new ArrayList<>(Arrays.asList(split));
+
+        guess.setChosenWord(word);
+        assertEquals(letters, guess.getChosenWordLetters());
     }
 }

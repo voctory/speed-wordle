@@ -31,6 +31,7 @@ public class WordApp {
     }
 
     // Inspired by lecture lab: B04 Logging Calculator
+    // https://github.students.cs.ubc.ca/CPSC210/B04-SimpleCalculatorStarterLecLab
     // MODIFIES: this
     // EFFECTS: always checks for input operation (true loop) when WordApp is initialized while user not in a game,
     //   breaks out of loop when user does not want to run the application anymore and says goodbye
@@ -39,7 +40,8 @@ public class WordApp {
 
         // In the "main menu", confirm if the user is ready to start a game.
         while (true) {
-            String intro = "The timer will immediately start. Ready? ('y' to start' / 'i' for help / any key to quit)";
+            String intro = "The timer will immediately start. Ready? ('y' to start a new game' / 'i' for help / "
+                    + "'l' to load saved game / any key to quit)";
             System.out.println(intro);
             operation = input.nextLine();
             System.out.println("You selected: " + operation + "\n");
@@ -62,9 +64,10 @@ public class WordApp {
     private void instructions() {
         System.out.println("The goal: solve the word as quickly as possible. You are being timed!");
         System.out.println("You can only enter 5-letter words! To exit a game, type 'exit'.");
-        System.out.println("Green letter: the letter is in the correct place!");
-        System.out.println("Yellow letter: the letter exists in the word, but it is not in the correct place.");
-        System.out.println("Red letter: the letter does not exist in the word :(");
+        System.out.println("\u001B[32mGreen letter\u001B[0m: the letter is in the correct place!");
+        System.out.println("\u001B[33mYellow letter\u001B[0m: the letter exists in the word, but it is "
+                + "not in the correct place.");
+        System.out.println("\u001B[31mRed letter\u001B[0m: the letter does not exist in the word :(");
         System.out.println("And finally, if you would like to see the time elapsed during a game, enter 't'.\n");
     }
 
@@ -74,7 +77,7 @@ public class WordApp {
     //   word, end the game. otherwise, check the word's inaccuracies given that it is 5 characters long
     //   and print the word history
     private void getWordInputs() {
-        System.out.println("Enter a 5-letter word to guess! Or to leave, type in 'exit'.");
+        System.out.println("Enter a 5-letter word to guess! Or to leave and save your game, type in 'exit'.");
         String guess;
         while (gameActive) {
             // in this case, operation is used to communicate the guessed word.

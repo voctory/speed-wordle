@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 public class Main {
     // EFFECTS: initializes the app
     public static void main(String[] args) {
+        // Try-catch construct taken/applied from Main class in
+        // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
         try {
             new WordApp();
         } catch (FileNotFoundException e) {

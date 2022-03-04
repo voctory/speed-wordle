@@ -20,6 +20,9 @@ so I might as well try it out in CPSC210 :)
 - As a user, I want to be able to see if a letter is placed correctly, is mispositioned, or if it is not in a word.
 - As a user, I want to be able to solve the puzzle quickly and use a timer to see how well I did.
 - As a user, I want to be able to work on a puzzle and check the time whenever I want.
+- (Phase 2) As a user, I want to be able to save a MOTUS game in its entirety to play it later.
+- (Phase 2) As a user, I want to be able to reload a MOTUS game and resume right where I left off 
+such that the timer is 'running' the entire time.
 
 ## How to run
 

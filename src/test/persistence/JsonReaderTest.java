@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Large extent of class taken/applied from JSONReaderTest class in
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 class JsonReaderTest {
 
     @Test

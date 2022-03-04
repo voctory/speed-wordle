@@ -15,6 +15,8 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
+// Large extent of class taken/applied from JSONReader class in
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a reader that reads guessing game from JSON data stored in file
 public class JsonReader {
     private String source;
