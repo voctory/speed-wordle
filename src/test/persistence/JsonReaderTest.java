@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Guessing;
+import model.Timer;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -57,4 +58,17 @@ class JsonReaderTest {
             fail("Couldn't read from file");
         }
     }
+
+    // also contains testParseTime, a helper function
+    @Test
+    public void testReadTime() {
+        JsonReader reader = new JsonReader("./data/testReaderManyGuesses.json");
+        try {
+            reader.readTime();
+            assertEquals(1646371815799L, Timer.getTime());
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
+
 }

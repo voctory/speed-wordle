@@ -26,4 +26,10 @@ class TimerTest {
         String answer = timer.getTimeElapsed();
         assertTrue(answer.length() > 0);
     }
+
+    @Test
+    public void testSetStartTime() {
+        timer.setStartTime(1646377418990L);
+        assertEquals(1646377418990L, timer.getTime());
+    }
 }
