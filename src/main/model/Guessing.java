@@ -1,12 +1,15 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 // Chooses a random word and creates a WordHistory to compare and collect character similarities over time
-public class Guessing {
+public class Guessing implements Writable {
     private String chosenWord;
     private ArrayList<String> chosenWordLetters;
     private WordHistory wordHistory;
@@ -34,12 +37,19 @@ public class Guessing {
         wordHistory = new WordHistory();
     }
 
-    // ONLY used for JUnit Test purposes. User does not have access.
+    // used for JUnit Tests and restoring previous word of game states
     // MODIFIES: this
     // EFFECTS: setter for chosen word and separates the letters
     public void setChosenWord(String chosenWord) {
         this.chosenWord = chosenWord;
         this.chosenWordLetters = stringToArrayList(chosenWord);
+    }
+
+    // used for JUnit Tests and restoring previous Word History of game states
+    // MODIFIES: this
+    // EFFECTS: setter for Word History
+    public void setWordHistory(ArrayList<String> guesses) {
+        wordHistory.setHistory(guesses);
     }
 
     // EFFECTS: getter for chosen word; used for JUnit tests
@@ -113,5 +123,23 @@ public class Guessing {
     // EFFECTS: getter for returning the wordHistory linked to this Guessing object
     public ArrayList<String> display() {
         return wordHistory.display();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("game", gameToJson());
+        return json;
+    }
+
+    // EFFECTS: returns properties in this guessing game as a JSON array
+    private JSONObject gameToJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("word", chosenWord);
+        jsonObject.put("history", wordHistory.toJson());
+        jsonObject.put("time", Timer.getTime());
+
+        return jsonObject;
     }
 }

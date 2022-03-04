@@ -2,7 +2,7 @@ package model;
 
 // Keeps track of the time elapsed when instantiated, returns string when stopped
 public class Timer {
-    private long time;
+    private static long time;
 
     // Constructor
     // EFFECT: set time to system's time in milliseconds for time comparisons
@@ -27,8 +27,14 @@ public class Timer {
     }
 
     // EFFECTS: returns time, for JUnit verification
-    public long getTime() {
+    public static long getTime() {
         return time;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the time of restored game session from history.json
+    public void setStartTime(long milliseconds) {
+        time = milliseconds;
     }
 
     // EFFECTS: returns difference between current time and instantiated time

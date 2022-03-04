@@ -2,22 +2,31 @@ package ui;
 
 import model.Timer;
 import model.Guessing;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // UI class for the main console interaction, containing the game and main menus
 public class WordApp {
+    private static final String JSON_STORE = "./data/history.json";
     private final Scanner input;
     private boolean gameActive;
     private Guessing guesses;
     private Timer timer;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // Constructor
     // EFFECTS: creates a console scanner, confirms initialization, and redirects to the mainMenu method
-    public WordApp() {
+    public WordApp() throws FileNotFoundException {
         input = new Scanner(System.in);
         System.out.println("MOTUS Word App initialized!");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         mainMenu();
     }
 
@@ -37,9 +46,10 @@ public class WordApp {
 
             if (operation.equalsIgnoreCase("Y") || operation.equalsIgnoreCase("yes")) {
                 activateGame();
-                getWordInputs();
             } else if (operation.equalsIgnoreCase("i")) {
                 instructions();
+            } else if (operation.equalsIgnoreCase("l") || operation.equalsIgnoreCase("load")) {
+                loadGame();
             } else {
                 break;
             }
@@ -71,15 +81,15 @@ public class WordApp {
             guess = input.nextLine();
             System.out.println("You entered: " + guess);
             if (guess.equalsIgnoreCase("exit")) {
-                System.out.println("Okay, exiting the game early.");
+                System.out.println("Okay, exiting the game early and saving it for later.");
+                saveGame();
                 finishGame();
             } else if (guesses.isCorrect(guess)) {
                 System.out.println("Congrats!");
                 finishGame();
             } else {
                 if (guess.equalsIgnoreCase("t") || guess.equalsIgnoreCase("time")) {
-                    String currentTime = timer.getTimeElapsed();
-                    System.out.println(currentTime);
+                    System.out.println(timer.getTimeElapsed());
                 } else if (!guesses.isValid(guess)) {
                     System.out.println("You did not enter a valid 5-letter word! Try again.");
                 } else {
@@ -104,6 +114,7 @@ public class WordApp {
         gameActive = true;
         guesses = new Guessing();
         timer = new Timer();
+        getWordInputs();
     }
 
     // MODIFIES: this, Timer
@@ -114,5 +125,31 @@ public class WordApp {
         String time = timer.getTimeElapsed();
         System.out.println("Your time was: " + time);
         System.out.println("We'd love to play another game with you!\n");
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(guesses);
+            jsonWriter.close();
+            System.out.println("Saved current game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadGame() {
+        try {
+            guesses = jsonReader.read();
+            timer = jsonReader.readTime();
+            System.out.println("Loaded old game from " + JSON_STORE);
+            gameActive = true;
+            getWordInputs();
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }

@@ -1,8 +1,10 @@
 package model;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
-//
+// Maintains a list of guessed words throughout a game session, with string formatting
 public class WordHistory {
     private ArrayList<String> history;
 
@@ -23,4 +25,17 @@ public class WordHistory {
     public void addToHistory(String outcome) {
         history.add(outcome);
     }
+
+    // MODIFIES: this
+    // EFFECTS: setter to import persisted word history
+    public void setHistory(ArrayList<String> guesses) {
+        this.history = guesses;
+    }
+
+    // EFFECTS: returns word history array list as JSON object, made possible with GSON (not JSONArray)
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(history);
+    }
+
 }
