@@ -1,6 +1,6 @@
 package persistence;
+
 import model.Guessing;
-import model.Timer;
 import org.json.JSONObject;
 
 
