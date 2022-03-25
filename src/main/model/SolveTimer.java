@@ -10,6 +10,12 @@ public class SolveTimer {
         time = System.currentTimeMillis();
     }
 
+    // Constructor for restoring time
+    // EFFECT: set time to given time
+    public SolveTimer(long time) {
+        this.time = time;
+    }
+
     // MODIFIES: this
     // EFFECTS: calculates the time elapsed by subtracting the system finish time from the system begin time, then
     //    converts elapsed milliseconds to a human-readable string of the time taken

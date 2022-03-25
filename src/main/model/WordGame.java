@@ -1,9 +1,16 @@
 package model;
 
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.json.JSONObject;
+import persistence.Writable;
 
-public class WordGame {
+import java.awt.event.KeyEvent;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class WordGame implements Writable {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
@@ -24,6 +31,27 @@ public class WordGame {
         currentGuess = new Word("", actualWord, wordHistory);
         solveTimer = new SolveTimer();
         timeElapsedCache = "";
+    }
+
+    // Reload WordGame from persisted save state
+    // requires: json is a valid JSON object
+    public void reload(JSONObject json) {
+        restartGame();
+
+        isGameOver = json.getBoolean("isGameOver");
+
+        Gson gson = new Gson();
+        String jsonString = json.getString("wordHistory");
+        // convert json string to WordHistory object
+
+        Type words = new TypeToken<Collection<Word>>(){}.getType();
+        Collection<Word> enums = gson.fromJson(jsonString, words);
+
+        wordHistory.setWordHistory(enums);
+        actualWord.fromJson(json.getString("actualWord"), wordHistory);
+
+        // restore solve timer from JSON, convert into long
+        solveTimer = new SolveTimer(json.getLong("timeElapsed"));
     }
 
     // Updates the game on clock tick
@@ -100,5 +128,18 @@ public class WordGame {
 
     public Word getCurrentWord() {
         return currentGuess;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("isGameOver", isGameOver);
+        json.put("currentGuess", currentGuess.getWord());
+        json.put("actualWord", actualWord.getChosenWord());
+        json.put("timeElapsed", solveTimer.getTime());
+        // convert word history to JSON with GSON
+
+        json.put("wordHistory", wordHistory.toJson());
+        return json;
     }
 }

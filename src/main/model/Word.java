@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.Map;
 public class Word {
     private String word;
     private List<Letter> letters;
-    private Guessing actualWord;
+    private transient Guessing actualWord;
     private boolean stillGuessing;
-    private WordHistory wordHistory;
+    private transient WordHistory wordHistory;
 
     // for generating guessed words
     public Word(String word, List<Letter> letters, Guessing actualWord, WordHistory wh) {

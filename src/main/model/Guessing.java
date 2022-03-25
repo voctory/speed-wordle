@@ -12,7 +12,7 @@ import java.util.Random;
 public class Guessing implements Writable {
     private String chosenWord;
     private ArrayList<String> chosenWordLetters;
-    private WordHistory wordHistory;
+    private transient WordHistory wordHistory;
 
     private static final int WORD_LENGTH = 5;
 
@@ -76,20 +76,15 @@ public class Guessing implements Writable {
 
     @Override
     public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("game", gameToJson());
-        return json;
+        return null;
     }
 
-    // EFFECTS: returns properties in this guessing game as a JSON array
-    private JSONObject gameToJson() {
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("word", chosenWord);
-        // NEED TO FIX COUPLING - how to get wordHistory?
-//        jsonObject.put("history", wordHistory.toJson());
-        jsonObject.put("time", SolveTimer.getTime());
-
-        return jsonObject;
+    public void fromJson(String actualWord, WordHistory wh) {
+        // find chosenWord in JSON and set it as the chosenWord
+        // find chosenWordLetters in JSON and set it as the chosenWordLetters
+        // find wordHistory in JSON and set it as the wordHistory
+        chosenWord = actualWord;
+        chosenWordLetters = stringToArrayList(chosenWord);
+        wordHistory = wh;
     }
 }

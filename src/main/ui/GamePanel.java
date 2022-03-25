@@ -12,7 +12,7 @@ public class GamePanel extends JPanel {
     private WordGame game;
     private static final String OVER = "Game Over!";
     private static final String REPLAY = "R to replay";
-    private static final String SAVE = "TAB to save";
+    private static final String SAVE = "SHIFT to save";
     private static final String RELOAD = "ESC to reload";
     private static final Color WORDLE_THEME = new Color(0x121213);
 

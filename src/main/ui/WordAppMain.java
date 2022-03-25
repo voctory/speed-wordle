@@ -51,6 +51,8 @@ public class WordAppMain extends JFrame {
         centreOnScreen();
         setVisible(true);
         addTimer();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE, game);
     }
 
     // Set up timer
@@ -85,37 +87,40 @@ public class WordAppMain extends JFrame {
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_R && game.isOver()) {
                 game.restartGame();
+            } else if (e.getKeyCode() == KeyEvent.VK_SHIFT && !game.isOver()) {
+                saveGame();
+                System.out.println("Saved game");
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !game.isOver()) {
+                loadGame();
+                System.out.println("Loaded game");
             } else {
                 game.keyPressed(e.getKeyCode());
             }
         }
     }
 
-    // EFFECTS: saves the workroom to file
-//    private void saveGame() {
-//        try {
-//            jsonWriter.open();
-//            jsonWriter.write(guesses);
-//            jsonWriter.close();
-//            System.out.println("Saved current game to " + JSON_STORE);
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Unable to write to file: " + JSON_STORE);
-//        }
-//    }
+    // EFFECTS: saves the word game state to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(game.toJson());
+            jsonWriter.close();
+            System.out.println("Saved current game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
-//    private void loadGame() {
-//        try {
-//            guesses = jsonReader.read();
-//            timer = jsonReader.readTime();
-//            System.out.println("Loaded old game from " + JSON_STORE);
-//            gameActive = true;
-//            getWordInputs();
-//        } catch (IOException e) {
-//            System.out.println("Unable to read from file: " + JSON_STORE);
-//        }
-//    }
+    // EFFECTS: loads word game state from file
+    private void loadGame() {
+        try {
+            jsonReader.read();
+            System.out.println("Loaded old game from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 
     /*
      * Play the game

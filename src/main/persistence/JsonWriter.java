@@ -28,9 +28,8 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of guessing game to file
-    public void write(Guessing gg) {
-        JSONObject json = gg.toJson();
-        saveToFile(json.toString(TAB));
+    public void write(JSONObject gameState) {
+        saveToFile(gameState.toString(TAB));
     }
 
     // MODIFIES: this

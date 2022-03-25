@@ -3,6 +3,7 @@ package model;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 // Maintains a list of guessed words throughout a game session, with string formatting
 public class WordHistory {
@@ -12,6 +13,13 @@ public class WordHistory {
     // EFFECTS: creates a new array list to keep track of the words passed
     public WordHistory() {
         history = new ArrayList<>();
+    }
+
+    // Alternate constructor for restoring save from JSON
+    // MODIFIES: this
+    // EFFECTS: restores the history from a JSON Object
+    public void setWordHistory(Collection enums) {
+        history = new ArrayList<Word>(enums);
     }
 
     // MODIFIES: this
@@ -48,9 +56,5 @@ public class WordHistory {
 
     public ArrayList<Word> getImmutableWordHistory() {
         return new ArrayList<>(history);
-    }
-
-    public int getSizeY() {
-        return history.size() * Letter.SIZE_Y;
     }
 }
