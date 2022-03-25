@@ -69,10 +69,6 @@ public class WordGame implements Writable {
         // TODO: update keystrokes to match the keystrokes in the game
         if (keyCode == KeyEvent.VK_R && isGameOver) {
             setUp();
-        } else if (keyCode == KeyEvent.VK_L && isGameOver) {
-            setUp();
-        } else if (keyCode == KeyEvent.VK_X && isGameOver) {
-            System.exit(0);
         } else {
             currentGuess.keyPressed(keyCode);
         }
@@ -98,13 +94,12 @@ public class WordGame implements Writable {
     private void checkGameOver() {
         if (getCurrentWord().isWordSolved()) {
             isGameOver = true;
-            // TODO: add stop timer
         }
     }
 
     // REQUIRES: checkGameOver() has been called and is true, R has been pressed to restart
     // MODIFIES: this
-    // EFFECTS:  clears list of game objects (words)
+    // EFFECTS:  clears list of game objtects (words)
     public void restartGame() {
         // TODO: duplicated code from setUp()
         isGameOver = false;

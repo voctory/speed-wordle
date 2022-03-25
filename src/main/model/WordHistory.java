@@ -38,12 +38,6 @@ public class WordHistory {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: setter to import persisted word history
-    public void setHistory(ArrayList<Word> guesses) {
-        this.history = guesses;
-    }
-
     // EFFECTS: returns word history array list as JSON object, made possible with GSON (not JSONArray)
     public String toJson() {
         Gson gson = new Gson();
