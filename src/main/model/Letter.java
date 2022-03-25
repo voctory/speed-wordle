@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.*;
-import java.io.Serializable;
 
 public class Letter {
 
@@ -25,7 +24,7 @@ public class Letter {
         // convert to upper case
         this.letter = Character.toUpperCase(letter.charAt(0));
         this.letterIndexInWord = 0;
-        this.color = Color.BLUE;
+        this.color = Color.DARK_GRAY;
     }
 
     public Color getColor() {

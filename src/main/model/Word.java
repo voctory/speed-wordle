@@ -80,7 +80,7 @@ public class Word {
             hashMap.put(Character.toString(letter), integer - 1);
             return Color.YELLOW;
         }
-        return Color.RED;
+        return Color.DARK_GRAY;
     }
 
     public String getWord() {

@@ -32,6 +32,7 @@ public class WordAppMain extends JFrame {
     private KeyboardPanel kp;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private HelpButton hlpBtn;
 
     // Constructs main window
     // effects: sets up window in which Space Invaders game will be played
@@ -41,12 +42,17 @@ public class WordAppMain extends JFrame {
         setUndecorated(false);
         game = new WordGame();
         gp = new GamePanel(game);
-        sp = new StatsPanel(game);
+        hlpBtn = new HelpButton();
+        sp = new StatsPanel(game, hlpBtn);
         kp = new KeyboardPanel();
+        add(hlpBtn, BorderLayout.EAST);
+        hlpBtn.setFocusable(false);
         add(gp);
         add(sp, BorderLayout.NORTH);
         add(kp, BorderLayout.SOUTH);
         addKeyListener(new KeyHandler());
+
+
         pack();
         centreOnScreen();
         setVisible(true);
