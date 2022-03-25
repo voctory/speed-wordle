@@ -9,31 +9,43 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WordHistoryTest {
     WordHistory history;
+    Word word;
+    Guessing guess;
 
     @BeforeEach
     public void runBefore() {
         history = new WordHistory();
+        guess = new Guessing(history);
+        word = new Word("tests", guess, history);
     }
 
     @Test
-    public void testConstructor() {
-        assertEquals(0, history.display().size());
+    public void testAddWord() {
+        history.addToHistory(word);
+        assertEquals(1, history.getImmutableWordHistory().size());
     }
 
     @Test
-    public void testDisplay() {
-        ArrayList<String> output = new ArrayList<>();
-        assertEquals(output, history.display());
+    public void testAddWordTwice() {
+        history.addToHistory(word);
+        history.addToHistory(word);
+        assertEquals(2, history.getImmutableWordHistory().size());
     }
 
+    // clears the history
     @Test
-    public void testAddToHistory() {
-        assertEquals(0, history.display().size());
+    public void testClearHistory() {
+        history.addToHistory(word);
+        history.clear();
+        assertEquals(0, history.getImmutableWordHistory().size());
+    }
 
-        history.addToHistory("String");
-        assertEquals("String", history.display().get(0));
-
-        history.addToHistory("Word");
-        assertEquals("Word", history.display().get(1));
+    // test setWordHistory
+    @Test
+    public void testSetWordHistory() {
+        ArrayList<Word> wordList = new ArrayList<>();
+        wordList.add(word);
+        history.setWordHistory(wordList);
+        assertEquals(1, history.getImmutableWordHistory().size());
     }
 }
