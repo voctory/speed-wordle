@@ -8,7 +8,7 @@ public class Main {
         // Try-catch construct taken/applied from Main class in
         // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
         try {
-            new WordApp();
+            new WordAppMain();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to run MOTUS: storage file not found");
         }

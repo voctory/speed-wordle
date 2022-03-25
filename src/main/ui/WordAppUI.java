@@ -2,16 +2,21 @@ package ui;
 
 import model.Timer;
 import model.Guessing;
+import model.WordHistory;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// UI class for the main console interaction, containing the game and main menus
-public class WordApp {
+// UI class for the main window frame interaction, containing the game and main menus
+public class WordAppUI extends JFrame {
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
+
     private static final String JSON_STORE = "./data/history.json";
     private final Scanner input;
     private boolean gameActive;
@@ -20,14 +25,21 @@ public class WordApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    private JComboBox<String> printCombo;
+    private JDesktopPane desktop;
+    private JInternalFrame controlPanel;
+
     // Constructor
     // EFFECTS: creates a console scanner, confirms initialization, and redirects to the mainMenu method
-    public WordApp() throws FileNotFoundException {
+    public WordAppUI() throws FileNotFoundException {
         input = new Scanner(System.in);
         System.out.println("MOTUS Word App initialized!");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        // TODO: deprecated
         mainMenu();
+
+        desktop = new JDesktopPane();
     }
 
     // Inspired by lecture lab: B04 Logging Calculator
@@ -95,19 +107,8 @@ public class WordApp {
                     System.out.println(timer.getTimeElapsed());
                 } else if (!guesses.isValid(guess)) {
                     System.out.println("You did not enter a valid 5-letter word! Try again.");
-                } else {
-                    guesses.inaccuracy(guess);
                 }
-                display();
             }
-        }
-    }
-
-    // EFFECTS: for every word in the instantiated word history, print it out first (oldest) to last (newest)
-    private void display() {
-        ArrayList<String> history = guesses.display();
-        for (String guess : history) {
-            System.out.println(guess);
         }
     }
 
@@ -115,7 +116,7 @@ public class WordApp {
     // EFFECTS: sets the game to be active and instantiates new Guessing and Timer objects
     private void activateGame() {
         gameActive = true;
-        guesses = new Guessing();
+        guesses = new Guessing(new WordHistory());
         timer = new Timer();
         getWordInputs();
     }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 // Maintains a list of guessed words throughout a game session, with string formatting
 public class WordHistory {
-    private ArrayList<String> history;
+    private ArrayList<Word> history;
 
     // Constructor
     // EFFECTS: creates a new array list to keep track of the words passed
@@ -14,21 +14,15 @@ public class WordHistory {
         history = new ArrayList<>();
     }
 
-    // REQUIRES: a word has already been guessed such that history is not empty
-    // EFFECTS: getter for the array list containing all the guessed words so far
-    public ArrayList<String> display() {
-        return history;
-    }
-
     // MODIFIES: this
     // EFFECTS: setter to add a new colour-indicated guessed word to the array list
-    public void addToHistory(String outcome) {
+    public void addToHistory(Word outcome) {
         history.add(outcome);
     }
 
     // MODIFIES: this
     // EFFECTS: setter to import persisted word history
-    public void setHistory(ArrayList<String> guesses) {
+    public void setHistory(ArrayList<Word> guesses) {
         this.history = guesses;
     }
 
@@ -38,4 +32,15 @@ public class WordHistory {
         return gson.toJson(history);
     }
 
+    public void clear() {
+        history.clear();
+    }
+
+    public ArrayList<Word> getImmutableWordHistory() {
+        return new ArrayList<>(history);
+    }
+
+    public int getSizeY() {
+        return history.size() * Letter.SIZE_Y;
+    }
 }

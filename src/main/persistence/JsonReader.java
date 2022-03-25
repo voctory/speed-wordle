@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import model.Word;
+import model.WordHistory;
 import org.json.*;
 
 // Large extent of class taken/applied from JSONReader class in
@@ -20,10 +22,12 @@ import org.json.*;
 // Represents a reader that reads guessing game from JSON data stored in file
 public class JsonReader {
     private String source;
+    private WordHistory wordHistory;
 
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
         this.source = source;
+        this.wordHistory = new WordHistory();
     }
 
     // EFFECTS: reads guessing game from file and returns it;
@@ -47,7 +51,7 @@ public class JsonReader {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
 
         return contentBuilder.toString();
@@ -55,7 +59,7 @@ public class JsonReader {
 
     // EFFECTS: parses guessing game from JSON object and returns it
     private Guessing parseGuessing(JSONObject jsonObject) {
-        Guessing gg = new Guessing();
+        Guessing gg = new Guessing(wordHistory);
         restoreGameState(gg, jsonObject);
         return gg;
     }
@@ -80,9 +84,11 @@ public class JsonReader {
         Gson gson = new Gson();
         String historyString = jsonGameState.getString("history");
 
-        Type listOfHistoryReference = new TypeToken<ArrayList<String>>() {}.getType();
+        Type listOfHistoryReference = new TypeToken<ArrayList<Word>>() {}.getType();
 
-        ArrayList<String> outputHistory = gson.fromJson(historyString, listOfHistoryReference);
-        gg.setWordHistory(outputHistory);
+        ArrayList<Word> outputHistory = gson.fromJson(historyString, listOfHistoryReference);
+
+        // need to restore word history from current
+        wordHistory.setHistory(outputHistory);
     }
 }

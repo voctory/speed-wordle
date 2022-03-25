@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,10 +32,10 @@ public class Guessing implements Writable {
     // MODIFIES: this
     // EFFECTS: from the hard-coded words list, choose a random one and set it as the chosen word.
     //    also, separate the characters of that word and instantiates a new word history
-    public Guessing() {
+    public Guessing(WordHistory wh) {
         Random rand = new Random();
         setChosenWord(WORD_LIST.get(rand.nextInt(WORD_LIST.size())));
-        wordHistory = new WordHistory();
+        this.wordHistory = wh;
     }
 
     // used for JUnit Tests and restoring previous word of game states
@@ -43,13 +44,6 @@ public class Guessing implements Writable {
     public void setChosenWord(String chosenWord) {
         this.chosenWord = chosenWord;
         this.chosenWordLetters = stringToArrayList(chosenWord);
-    }
-
-    // used for JUnit Tests and restoring previous Word History of game states
-    // MODIFIES: this
-    // EFFECTS: setter for Word History
-    public void setWordHistory(ArrayList<String> guesses) {
-        wordHistory.setHistory(guesses);
     }
 
     // EFFECTS: getter for chosen word; used for JUnit tests
@@ -62,55 +56,16 @@ public class Guessing implements Writable {
         return chosenWordLetters;
     }
 
-    // EFFECTS: getter for local word history; used for JUnit tests
-    public WordHistory getWordHistory() {
-        return wordHistory;
-    }
-
     // EFFECTS: getter for comparing a guessed word to the allotted word length
     public boolean isValid(String guess) {
         // cannot check isValid in Phase 1 of the project; will need to import text file data
         return guess.length() == WORD_LENGTH;
     }
 
-    // REQUIRES: guessed word "guess" is not an exact match to the word
-    // MODIFIES: this
-    // EFFECTS: compares the letters of a guessed word to the chosen word letters and adds the results
-    //   to the word history
-    public void inaccuracy(String guess) {
-        String outcome = compareStringArrays(guess);
-        // add to the word history
-        wordHistory.addToHistory(outcome);
-        // if this were not console-based, additional string processing would be done here (i.e. formatting)
-    }
 
     // EFFECTS: getter to check if the user's guess was correct; if it was, return true. otherwise, false.
     public boolean isCorrect(String guess) {
         return guess.equals(chosenWord);
-    }
-
-    // REQUIRES: guess has the same length as the chosen word
-    // EFFECTS: uses a for each loop to compare each character in the guessed word, and its matching relation
-    // to the chosen word. a character is green if perfectly matched, yellow if in the wrong spot, or red if not present
-    // afterward, return a string of the guessed word and its colour-indicated similarities
-    public String compareStringArrays(String guess) {
-        StringBuilder output = new StringBuilder();
-        ArrayList<String> characters = stringToArrayList(guess);
-        for (int i = 0; i < characters.size(); i++) {
-            // compare the characters in a word
-            String character = characters.get(i);
-            String chosenWordCharacter = chosenWordLetters.get(i);
-            if (character.equals(chosenWordCharacter)) {
-                output.append(ANSI_GREEN).append(character).append(ANSI_RESET);
-            } else if (chosenWordLetters.contains(character)) {
-                // check if string exists in ArrayList.
-                // in this case, .contains() checks for equality and NOT identity
-                output.append(ANSI_YELLOW).append(character).append(ANSI_RESET);
-            } else {
-                output.append(ANSI_RED).append(character).append(ANSI_RESET);
-            }
-        }
-        return output.toString();
     }
 
     // REQUIRES: word is not an empty string
@@ -118,11 +73,6 @@ public class Guessing implements Writable {
     private ArrayList<String> stringToArrayList(String word) {
         String[] split = word.split("");
         return new ArrayList<>(Arrays.asList(split));
-    }
-
-    // EFFECTS: getter for returning the wordHistory linked to this Guessing object
-    public ArrayList<String> display() {
-        return wordHistory.display();
     }
 
     @Override
@@ -137,7 +87,8 @@ public class Guessing implements Writable {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("word", chosenWord);
-        jsonObject.put("history", wordHistory.toJson());
+        // NEED TO FIX COUPLING - how to get wordHistory?
+//        jsonObject.put("history", wordHistory.toJson());
         jsonObject.put("time", Timer.getTime());
 
         return jsonObject;
