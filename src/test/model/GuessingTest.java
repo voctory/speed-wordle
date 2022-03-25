@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -147,5 +148,11 @@ class GuessingTest {
 
         guess.setChosenWord(word);
         assertEquals(letters, guess.getChosenWordLetters());
+    }
+
+    @Test
+    public void testToJson() {
+        JSONObject json = guess.toJson();
+        assertEquals(null, json);
     }
 }
