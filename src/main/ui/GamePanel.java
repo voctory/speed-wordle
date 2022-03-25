@@ -157,6 +157,6 @@ public class GamePanel extends JPanel {
 
     private void leftSideString(String str, Graphics g, FontMetrics fm, int posY) {
         int width = fm.stringWidth(str);
-        g.drawString(str, (WordGame.WIDTH - width) / 15, posY);
+        g.drawString(str, WordGame.WIDTH - (WordGame.WIDTH - width) / 4, posY);
     }
 }

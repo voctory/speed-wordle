@@ -25,7 +25,7 @@ import javax.swing.Timer;
 // SOURCE: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
 public class WordAppMain extends JFrame {
     private static final String JSON_STORE = "./data/history.json";
-    private static final int INTERVAL = 250;
+    private static final int INTERVAL = 20;
     private WordGame game;
     private GamePanel gp;
     private StatsPanel sp;

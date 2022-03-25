@@ -3,7 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,7 +88,7 @@ public class Guessing implements Writable {
         jsonObject.put("word", chosenWord);
         // NEED TO FIX COUPLING - how to get wordHistory?
 //        jsonObject.put("history", wordHistory.toJson());
-        jsonObject.put("time", Timer.getTime());
+        jsonObject.put("time", SolveTimer.getTime());
 
         return jsonObject;
     }

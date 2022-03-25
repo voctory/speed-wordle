@@ -2,7 +2,6 @@ package model;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 public class WordGame {
     public static final int WIDTH = 800;
@@ -13,14 +12,18 @@ public class WordGame {
     private WordHistory wordHistory;
     private Word currentGuess;
     private Guessing actualWord;
+    private SolveTimer solveTimer;
+    private String timeElapsedCache;
 
-    // Constructs a Word(le) Game
+    // Constructs a Speed Wordle Game
     // effects:  creates empty lists of missiles and invaders, centres tank on screen
     public WordGame() {
         wordHistory = new WordHistory();
         actualWord = new Guessing(wordHistory);
         // use an empty string as the current guess
         currentGuess = new Word("", actualWord, wordHistory);
+        solveTimer = new SolveTimer();
+        timeElapsedCache = "";
     }
 
     // Updates the game on clock tick
@@ -47,18 +50,9 @@ public class WordGame {
         }
     }
 
-    private void enterWord() {
-
-    }
-
     // Exercise: fill in the documentation for this method
     public boolean isOver() {
         return isGameOver;
-    }
-
-    // set game to over in setter
-    public void setGameOver() {
-        isGameOver = true;
     }
 
     // Sets / resets the game
@@ -75,9 +69,6 @@ public class WordGame {
     //           over and lists of invaders & missiles cleared
     private void checkGameOver() {
         if (getCurrentWord().isWordSolved()) {
-//            wordHistory.clear();
-//            currentGuess.clear();
-            System.out.println("wowww");
             isGameOver = true;
             // TODO: add stop timer
         }
@@ -93,13 +84,14 @@ public class WordGame {
         actualWord = new Guessing(wordHistory);
         // use an empty string as the current guess
         currentGuess = new Word("", actualWord, wordHistory);
-
-//        wordHistory.clear();
-//        currentGuess.clear();
+        solveTimer = new SolveTimer();
     }
 
     public String getTimeElapsed() {
-        return "";
+        if (!isGameOver) {
+            timeElapsedCache = solveTimer.getTimeElapsed();
+        }
+        return timeElapsedCache;
     }
 
     public ArrayList<Word> getWordHistory() {

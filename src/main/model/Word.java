@@ -119,7 +119,6 @@ public class Word {
             // check if the words are equal
             if (getWordsAreEqual()) {
                 this.stillGuessing = false;
-                System.out.println("Word is solved!");
             } else {
                 Word nowGuessedWord = new Word(word, letters, actualWord, wordHistory);
                 wordHistory.addToHistory(nowGuessedWord);

@@ -1,6 +1,6 @@
 package ui;
 
-import model.Timer;
+import model.SolveTimer;
 import model.Guessing;
 import model.WordHistory;
 import persistence.JsonReader;
@@ -9,7 +9,6 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 // UI class for the main window frame interaction, containing the game and main menus
@@ -21,7 +20,7 @@ public class WordAppUI extends JFrame {
     private final Scanner input;
     private boolean gameActive;
     private Guessing guesses;
-    private Timer timer;
+    private SolveTimer timer;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -117,7 +116,7 @@ public class WordAppUI extends JFrame {
     private void activateGame() {
         gameActive = true;
         guesses = new Guessing(new WordHistory());
-        timer = new Timer();
+        timer = new SolveTimer();
         getWordInputs();
     }
 

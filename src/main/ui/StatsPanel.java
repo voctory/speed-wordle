@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StatsPanel extends JPanel {
-    private static final String TIME_TAKEN_TXT = "Time taken: ";
+    private static final String TIME_TAKEN_TXT = "Time: ";
     private static final int LBL_WIDTH = 200;
     private static final int LBL_HEIGHT = 30;
     private WordGame game;

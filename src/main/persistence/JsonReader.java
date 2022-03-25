@@ -3,7 +3,7 @@ package persistence;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Guessing;
-import model.Timer;
+import model.SolveTimer;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -40,7 +40,7 @@ public class JsonReader {
 
     // EFFECTS: reads guessing game from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Timer readTime() throws IOException {
+    public SolveTimer readTime() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseTime(jsonObject);
@@ -65,8 +65,8 @@ public class JsonReader {
     }
 
     // EFFECTS: parses old game state time from JSON object and returns it
-    private Timer parseTime(JSONObject jsonObject) {
-        Timer timer = new Timer();
+    private SolveTimer parseTime(JSONObject jsonObject) {
+        SolveTimer timer = new SolveTimer();
         timer.setStartTime(jsonObject.getJSONObject("game").getLong("time"));
         return timer;
     }

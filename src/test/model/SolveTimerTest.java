@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TimerTest {
-    protected Timer timer;
+class SolveTimerTest {
+    protected SolveTimer timer;
 
     @BeforeEach
     public void runBefore() {
-        timer = new Timer();
+        timer = new SolveTimer();
     }
 
     @Test

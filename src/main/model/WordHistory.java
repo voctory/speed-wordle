@@ -18,6 +18,16 @@ public class WordHistory {
     // EFFECTS: setter to add a new colour-indicated guessed word to the array list
     public void addToHistory(Word outcome) {
         history.add(outcome);
+        trimHistory();
+    }
+
+    // REQUIRES: history is not empty
+    // MODIFIES: this
+    // EFFECTS: limit history size to 10, remove oldest word
+    private void trimHistory() {
+        if (history.size() > 10) {
+            history.remove(0);
+        }
     }
 
     // MODIFIES: this

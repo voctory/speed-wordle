@@ -1,12 +1,12 @@
 package model;
 
 // Keeps track of the time elapsed when instantiated, returns string when stopped
-public class Timer {
+public class SolveTimer {
     private static long time;
 
     // Constructor
     // EFFECT: set time to system's time in milliseconds for time comparisons
-    public Timer() {
+    public SolveTimer() {
         time = System.currentTimeMillis();
     }
 
@@ -23,7 +23,7 @@ public class Timer {
         long minute = (differenceMs / (1000 * 60)) % 60;
         long hour = (differenceMs / (1000 * 60 * 60)) % 24;
 
-        return String.format("%02d:%02d:%02d.%d (h:m:s:ms)", hour, minute, second, millis);
+        return String.format("%02dh, %02dm, %02ds, %dms", hour, minute, second, millis);
     }
 
     // EFFECTS: returns time, for JUnit verification
