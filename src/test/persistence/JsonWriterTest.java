@@ -15,18 +15,33 @@ import static org.junit.jupiter.api.Assertions.*;
 class JsonWriterTest {
     String JSON_STORE = "./data/testWriteHistory.json";
     JsonWriter jsonWriter;
+    WordGame wordGame;
 
     @BeforeEach
-    void runBefore() {
+    public void runBefore() {
         jsonWriter = new JsonWriter(JSON_STORE);
+        wordGame = new WordGame();
     }
 
     @Test
-    void open() {
+    public void open() {
         try {
             jsonWriter.open();
         } catch (IOException e) {
             fail("IOException");
         }
     }
+
+    // test toJson of WordGame
+    @Test
+    public void testToJson() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(wordGame.toJson());
+            jsonWriter.close();
+        } catch (IOException e) {
+            fail("IOException");
+        }
+    }
+
 }
