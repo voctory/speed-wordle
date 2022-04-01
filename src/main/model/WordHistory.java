@@ -20,6 +20,7 @@ public class WordHistory {
     // EFFECTS: restores the history from a JSON Object
     public void setWordHistory(Collection enums) {
         history = new ArrayList<Word>(enums);
+        EventLog.getInstance().logEvent(new Event("Word History restored."));
     }
 
     // MODIFIES: this
@@ -29,7 +30,6 @@ public class WordHistory {
         trimHistory();
     }
 
-    // REQUIRES: history is not empty
     // MODIFIES: this
     // EFFECTS: limit history size to 10, remove oldest word
     private void trimHistory() {
@@ -44,10 +44,14 @@ public class WordHistory {
         return gson.toJson(history);
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears the history once a game is over
     public void clear() {
         history.clear();
+        EventLog.getInstance().logEvent(new Event("Word History has been cleared."));
     }
 
+    // EFFECTS: returns the history of guessed words as an immutable array list
     public ArrayList<Word> getImmutableWordHistory() {
         return new ArrayList<>(history);
     }

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+// Display the WordGame and allow the user to type directly to it
 public class GamePanel extends JPanel {
     private WordGame game;
     private static final String OVER = "Game Over!";
@@ -17,7 +18,8 @@ public class GamePanel extends JPanel {
     private static final Color WORDLE_THEME = new Color(0x121213);
 
     // Constructs a game panel
-    // effects:  sets size and background colour of panel,
+    // MODIFIES: this
+    // EFFECTS:  sets size and background colour of panel,
     //           updates this with the game to be displayed
     public GamePanel(WordGame g) {
         setPreferredSize(new Dimension(WordGame.WIDTH, WordGame.HEIGHT));
@@ -25,6 +27,8 @@ public class GamePanel extends JPanel {
         this.game = g;
     }
 
+    // MODIFIES: g
+    // EFFECTS: Draws the game every tick interval
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -37,6 +41,8 @@ public class GamePanel extends JPanel {
         }
     }
 
+    // MODIFIES: g
+    // EFFECTS: Draws the game instructions to save and reload
     private void drawSaveAndReload(Graphics g) {
         g.setColor(new Color(255, 255, 255));
         g.setFont(new Font("Arial", Font.ITALIC, 20));
@@ -45,9 +51,8 @@ public class GamePanel extends JPanel {
         leftSideString(RELOAD, g, fm, WordGame.HEIGHT / 2 + 50);
     }
 
-    // Draws the game
-    // modifies: g
-    // effects:  draws the game onto g
+    // MODIFIES: g
+    // EFFECTS:  draws the game panel onto g
     private void drawGame(Graphics g) {
         JPanel allWords = new JPanel(new GridBagLayout());
         drawWordGuesses(g, allWords);
@@ -55,9 +60,8 @@ public class GamePanel extends JPanel {
         add(allWords);
     }
 
-    // Draw the guessed words so far
-    // modifies: g
-    // effects:  draws the tank onto g
+    // MODIFIES: g
+    // EFFECTS:  draw the guessed words so far onto g
     private void drawWordGuesses(Graphics g, JPanel allWords) {
         JPanel historyRow = new JPanel(new GridBagLayout());
         ArrayList<Word> words = game.getWordHistory();
@@ -70,17 +74,15 @@ public class GamePanel extends JPanel {
         allWords.add(historyRow, constraintsRow);
     }
 
-    // Draw the guessed words so far
-    // modifies: g
-    // effects:  draws the tank onto g
+    // MODIFIES: g
+    // EFFFECTS:  draws the current guess onto g
     private void drawCurrentGuess(Graphics g, JPanel allWords) {
         Word currentWord = game.getCurrentWord();
         drawWord(currentWord, g, allWords);
     }
 
-    // Draw the *guessed* word
-    // modifies: g
-    // effects:  draws the word onto g
+    // MODIFIES: g
+    // EFFECTS:  draws a single unguessed word onto g
     private void drawWord(Word w, Graphics g, JPanel allWords) {
         JPanel wordRow = new JPanel(new GridBagLayout());
 
@@ -98,9 +100,8 @@ public class GamePanel extends JPanel {
         allWords.add(wordRow, constraintsRow);
     }
 
-    // Draw a word from the history
-    // modifies: g
-    // effects:  draws the word onto g
+    // MODIFIES: g
+    // EFFECTS:  draws the guessed word onto g
     private void drawWord(Word w, Graphics g, JPanel historyRow, int rowIndex) {
         JPanel wordRow = new JPanel(new GridBagLayout());
 
@@ -113,7 +114,8 @@ public class GamePanel extends JPanel {
         historyRow.add(wordRow, constraintsRow);
     }
 
-    // Draw the letter
+    // MODIFIES: g
+    // EFFECTS:  draws a single letter onto g
     private void drawLetter(Letter letter, Graphics g, JPanel wordRow) {
         GridBagConstraints letterGrid = new GridBagConstraints();
 
@@ -134,9 +136,8 @@ public class GamePanel extends JPanel {
         wordRow.add(b, letterGrid);
     }
 
-    // Draws the "game over" message and replay instructions
-    // modifies: g
-    // effects:  draws "game over" and replay instructions onto g
+    // MODIFIES: g
+    // EFFECTS:  draws "game over" and replay instructions onto g
     private void gameOver(Graphics g) {
         Color saved = g.getColor();
         g.setColor(new Color(255, 255, 255));
@@ -147,14 +148,15 @@ public class GamePanel extends JPanel {
         g.setColor(saved);
     }
 
-    // Centres a string on the screen
-    // modifies: g
-    // effects:  centres the string str horizontally onto g at vertical position posY
+    // MODIFIES: g
+    // EFFECTS:  centres the string str horizontally onto g at vertical position posY
     private void centreString(String str, Graphics g, FontMetrics fm, int posY) {
         int width = fm.stringWidth(str);
         g.drawString(str, (WordGame.WIDTH - width) / 15, posY);
     }
 
+    // MODIFIES: g
+    // EFFECTS:  left-centres the string str horizontally onto g at vertical position posY
     private void leftSideString(String str, Graphics g, FontMetrics fm, int posY) {
         int width = fm.stringWidth(str);
         g.drawString(str, WordGame.WIDTH - (WordGame.WIDTH - width) / 4, posY);

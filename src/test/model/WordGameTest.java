@@ -2,11 +2,16 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.JsonReader;
+
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WordGameTest {
     private WordGame wg;
+    private String JSON_STORE = "./data/testGameIsOver.json";
 
     @BeforeEach
     void runBefore() {
@@ -85,7 +90,7 @@ public class WordGameTest {
         wg.keyPressed('c');
         wg.keyPressed('d');
         wg.keyPressed('e');
-        assertEquals(false, wg.isOver());
+        assertFalse(wg.isOver());
     }
 
     // test update; nothing should change
@@ -102,9 +107,56 @@ public class WordGameTest {
     }
 
     @Test
-    void testGetTimeElapsed() {
+    void testGetTimeElapsedGameRunning() {
         // i.e., string should not be empty
         assertTrue(0 < wg.getTimeElapsed().length());
         assertFalse(wg.getTimeElapsed().isEmpty());
+    }
+
+    // test checkGameOver
+    @Test
+    void testGetTimeElapsedGameOver() {
+        try {
+            JsonReader jsonReader = new JsonReader(JSON_STORE, wg);
+            jsonReader.read();
+            wg.update();
+            assertFalse(0 < wg.getTimeElapsed().length());
+        } catch (IOException e) {
+            fail("IOException should not be thrown");
+        }
+    }
+
+    @Test
+    void testCheckGameOverTrueThenRestart() {
+        try {
+            JsonReader jsonReader = new JsonReader(JSON_STORE, wg);
+            jsonReader.read();
+            wg.update();
+            assertTrue(wg.isOver());
+            wg.keyPressed(KeyEvent.VK_R);
+            assertFalse(wg.isOver());
+        } catch (IOException e) {
+            fail("IOException should not be thrown");
+        }
+    }
+
+    @Test
+    void testUpdateGameOverFalseTryRestart() {
+        wg.update();
+        assertFalse(wg.isOver());
+        wg.keyPressed(KeyEvent.VK_R);
+        assertFalse(wg.isOver());
+    }
+
+    // test checkGameOver
+    @Test
+    void testUpdateGameOverTrue() {
+        try {
+            JsonReader jsonReader = new JsonReader(JSON_STORE, wg);
+            jsonReader.read();
+            wg.update();
+        } catch (IOException e) {
+            fail("IOException should not be thrown");
+        }
     }
 }

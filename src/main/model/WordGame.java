@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
+// represents a word game and all its properties (words, word history, timer)
 public class WordGame implements Writable {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -23,7 +24,8 @@ public class WordGame implements Writable {
     private String timeElapsedCache;
 
     // Constructs a Speed Wordle Game
-    // effects:  creates empty lists of missiles and invaders, centres tank on screen
+    // MODIFIES: this
+    // EFFECTS: creates a new WordGame object
     public WordGame() {
         wordHistory = new WordHistory();
         actualWord = new Guessing(wordHistory);
@@ -33,8 +35,9 @@ public class WordGame implements Writable {
         timeElapsedCache = "";
     }
 
-    // Reload WordGame from persisted save state
-    // requires: json is a valid JSON object
+    // REQUIRES: json is a valid, non-empty JSON object
+    // MODIFIES: this
+    // EFFECTS:  loads the WordGame state from the given, persisted JSON object
     public void reload(JSONObject json) {
         restartGame();
 
@@ -50,20 +53,25 @@ public class WordGame implements Writable {
         wordHistory.setWordHistory(enums);
         actualWord.fromJson(json.getString("actualWord"), wordHistory);
 
+        currentGuess.setWord(json.getString("currentGuess"));
+
         // restore solve timer from JSON, convert into long
         solveTimer = new SolveTimer(json.getLong("timeElapsed"));
+
+        EventLog.getInstance().logEvent(new Event("All properties of WordGame have been restored from JSON"));
     }
 
-    // Updates the game on clock tick
-    // modifies: this
-    // effects:  updates tank, missiles and invaders
+    // MODIFIES: this
+    // EFFECTS:  updates word game state, checks if game is over
     public void update() {
-        checkGameOver();
+        if (getCurrentWord().isWordSolved()) {
+            isGameOver = true;
+        }
     }
 
     // Responds to key press codes
-    // modifies: this
-    // effects:  turns tank, fires missiles and resets game in response to
+    // MODIFIES: this, Word
+    // EFFECTS:  turns keyboard input into shortcuts, OR letters and adds them to the current guess
     //           given key pressed code
     public void keyPressed(int keyCode) {
         // TODO: update keystrokes to match the keystrokes in the game
@@ -74,40 +82,30 @@ public class WordGame implements Writable {
         }
     }
 
-    // Exercise: fill in the documentation for this method
+    // EFFECTS:  returns true if game is over, false otherwise
     public boolean isOver() {
         return isGameOver;
     }
 
     // Sets / resets the game
-    // modifies: this
-    // effects:  clears list of missiles and invaders, initializes tank
+    // MODIFIES: this
+    // EFFECTS:  clears list of missiles and invaders, initializes tank
     private void setUp() {
         wordHistory.clear();
         isGameOver = false;
     }
 
-    // Is game over? (Has an invader managed to land?)
-    // modifies: this
-    // effects:  if an invader has landed, game is marked as
-    //           over and lists of invaders & missiles cleared
-    private void checkGameOver() {
-        if (getCurrentWord().isWordSolved()) {
-            isGameOver = true;
-        }
-    }
-
     // REQUIRES: checkGameOver() has been called and is true, R has been pressed to restart
     // MODIFIES: this
-    // EFFECTS:  clears list of game objtects (words)
+    // EFFECTS:  clears list of game objects (words)
     public void restartGame() {
-        // TODO: duplicated code from setUp()
         isGameOver = false;
         wordHistory = new WordHistory();
         actualWord = new Guessing(wordHistory);
         // use an empty string as the current guess
         currentGuess = new Word("", actualWord, wordHistory);
         solveTimer = new SolveTimer();
+        EventLog.getInstance().logEvent(new Event("Game has been restarted."));
     }
 
     public String getTimeElapsed() {
@@ -125,6 +123,7 @@ public class WordGame implements Writable {
         return currentGuess;
     }
 
+    // EFFECTS: returns the current game state as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -135,6 +134,7 @@ public class WordGame implements Writable {
         // convert word history to JSON with GSON
 
         json.put("wordHistory", wordHistory.toJson());
+        EventLog.getInstance().logEvent(new Event("Game state has been converted to JSON."));
         return json;
     }
 }

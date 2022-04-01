@@ -9,10 +9,11 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import org.json.*;
+import ui.WordAppMain;
 
 // Large extent of class taken/applied from JSONReader class in
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-// Represents a reader that reads guessing game from JSON data stored in file
+// Represents a reader that reads a persisted WordGame game from the JSON data stored in file
 public class JsonReader {
     private String source;
     private WordGame wordGame;
@@ -29,6 +30,7 @@ public class JsonReader {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         parseGuessing(jsonObject, wordGame);
+        EventLog.getInstance().logEvent(new Event("Loaded old game from " + WordAppMain.JSON_STORE));
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -42,8 +44,14 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // MODIFIES: this, WordGame
     // EFFECTS: parses word game from JSON object and returns it
     private void parseGuessing(JSONObject jsonObject, WordGame gg) {
         gg.reload(jsonObject);
+    }
+
+    // EFFECTS: collects error and logs it
+    public void error() {
+        EventLog.getInstance().logEvent(new Event("Unable to read from file: " + WordAppMain.JSON_STORE));
     }
 }

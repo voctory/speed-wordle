@@ -1,7 +1,7 @@
 {
-    "timeElapsed": 1648242870142,
+    "timeElapsed": 1648793007717,
     "isGameOver": false,
     "currentGuess": "",
-    "wordHistory": "[{\"word\":\"drink\",\"letters\":[{\"color\":{\"value\":-256,\"falpha\":0.0},\"letterIndexInWord\":0,\"letter\":\"D\"},{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":1,\"letter\":\"R\"},{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":2,\"letter\":\"I\"},{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":3,\"letter\":\"N\"},{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":4,\"letter\":\"K\"}],\"stillGuessing\":false},{\"word\":\"prune\",\"letters\":[{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":0,\"letter\":\"P\"},{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":1,\"letter\":\"R\"},{\"color\":{\"value\":-16711936,\"falpha\":0.0},\"letterIndexInWord\":2,\"letter\":\"U\"},{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":3,\"letter\":\"N\"},{\"color\":{\"value\":-65536,\"falpha\":0.0},\"letterIndexInWord\":4,\"letter\":\"E\"}],\"stillGuessing\":false}]",
-    "actualWord": "could"
+    "wordHistory": "[{\"word\":\"brunt\",\"letters\":[{\"color\":{\"value\":-12566464,\"falpha\":0.0},\"letterIndexInWord\":0,\"letter\":\"B\"},{\"color\":{\"value\":-256,\"falpha\":0.0},\"letterIndexInWord\":1,\"letter\":\"R\"},{\"color\":{\"value\":-12566464,\"falpha\":0.0},\"letterIndexInWord\":2,\"letter\":\"U\"},{\"color\":{\"value\":-12566464,\"falpha\":0.0},\"letterIndexInWord\":3,\"letter\":\"N\"},{\"color\":{\"value\":-256,\"falpha\":0.0},\"letterIndexInWord\":4,\"letter\":\"T\"}],\"stillGuessing\":false}]",
+    "actualWord": "there"
 }

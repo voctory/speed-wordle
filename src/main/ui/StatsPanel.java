@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// A panel specifically for displaying statistics, time elapsed.
 public class StatsPanel extends JPanel {
     private static final String TIME_TAKEN_TXT = "Time: ";
     private static final int LBL_WIDTH = 200;
@@ -17,7 +18,8 @@ public class StatsPanel extends JPanel {
     private boolean helpButtonOn;
 
     // Constructs a stats panel for the word game
-    // effects: sets the background colour and draws the initial labels;
+    // MODIFIES: this, JPanel
+    // EFFECTS: sets the background colour and draws the initial labels;
     //          updates this with the game whose timer is to be displayed
     public StatsPanel(WordGame g, HelpButton btn) {
         game = g;
@@ -26,10 +28,10 @@ public class StatsPanel extends JPanel {
         timeTakenLbl.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT));
         add(timeTakenLbl);
         helpBtn = btn;
-//        add(helpBtn);
         helpButtonOn = false;
-        helpBtn.addActionListener(new ActionListener() {
 
+        // EFFECTS: adds a clickable action listener to the help button
+        helpBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Image img = new ImageIcon("./data/instructions.png").getImage();
@@ -45,9 +47,8 @@ public class StatsPanel extends JPanel {
         });
     }
 
-    // Updates the score panel
-    // modifies: this
-    // effects:  updates timer of current game in stats panel
+    // MODIFIES: this, JPanel
+    // EFFECTS:  updates timer of current game in stats panel
     public void update() {
         timeTakenLbl.setText(TIME_TAKEN_TXT + game.getTimeElapsed());
         repaint();
