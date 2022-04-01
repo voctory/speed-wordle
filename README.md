@@ -27,3 +27,125 @@ such that the timer is 'running' the entire time.
 ## How to run
 
 From IntelliJ, navigate to `./src/main/ui/Main.java` and run the program.
+
+## Phase 4 - Task 2
+
+Thu Mar 31 22:36:52 PDT 2022
+Set chosen word to would.
+
+Thu Mar 31 22:36:52 PDT 2022
+Instantiate timer.
+
+Thu Mar 31 22:36:57 PDT 2022
+Letter added to word: W
+
+Thu Mar 31 22:36:57 PDT 2022
+Letter added to word: A
+
+Thu Mar 31 22:36:57 PDT 2022
+Letter added to word: T
+
+Thu Mar 31 22:36:57 PDT 2022
+Letter added to word: E
+
+Thu Mar 31 22:36:57 PDT 2022
+Letter added to word: R
+
+Thu Mar 31 22:36:59 PDT 2022
+Word has been entered by user.
+
+Thu Mar 31 22:36:59 PDT 2022
+Word is incorrect.
+
+Thu Mar 31 22:36:59 PDT 2022
+Word added to history: water
+
+Thu Mar 31 22:37:01 PDT 2022
+Letter added to word: W
+
+Thu Mar 31 22:37:02 PDT 2022
+Letter added to word: A
+
+Thu Mar 31 22:37:02 PDT 2022
+Letter added to word: S
+
+Thu Mar 31 22:37:02 PDT 2022
+Letter added to word: T
+
+Thu Mar 31 22:37:03 PDT 2022
+Letter added to word: R
+
+Thu Mar 31 22:37:04 PDT 2022
+Letter removed from word.
+
+Thu Mar 31 22:37:04 PDT 2022
+Letter added to word: E
+
+Thu Mar 31 22:37:05 PDT 2022
+Word has been entered by user.
+
+Thu Mar 31 22:37:05 PDT 2022
+Word is incorrect.
+
+Thu Mar 31 22:37:05 PDT 2022
+Word added to history: waste
+
+Thu Mar 31 22:37:07 PDT 2022
+Letter added to word: W
+
+Thu Mar 31 22:37:09 PDT 2022
+Letter added to word: I
+
+Thu Mar 31 22:37:09 PDT 2022
+Letter added to word: N
+
+Thu Mar 31 22:37:09 PDT 2022
+Letter added to word: D
+
+Thu Mar 31 22:37:09 PDT 2022
+Letter added to word: Y
+
+Thu Mar 31 22:37:09 PDT 2022
+Word has been entered by user.
+
+Thu Mar 31 22:37:09 PDT 2022
+Word is incorrect.
+
+Thu Mar 31 22:37:09 PDT 2022
+Word added to history: windy
+
+Thu Mar 31 22:37:12 PDT 2022
+Opening and writing to ./data/history.json
+
+Thu Mar 31 22:37:12 PDT 2022
+Game state has been converted to JSON.
+
+Thu Mar 31 22:37:12 PDT 2022
+Saved current game to ./data/history.json
+
+Thu Mar 31 22:37:21 PDT 2022
+Letter added to word: W
+
+Thu Mar 31 22:37:26 PDT 2022
+Letter added to word: A
+
+Thu Mar 31 22:37:27 PDT 2022
+Letter removed from word.
+
+Thu Mar 31 22:37:38 PDT 2022
+Letter added to word: O
+
+Thu Mar 31 22:37:38 PDT 2022
+Letter added to word: U
+
+Thu Mar 31 22:37:38 PDT 2022
+Letter added to word: L
+
+Thu Mar 31 22:37:38 PDT 2022
+Letter added to word: D
+
+Thu Mar 31 22:37:38 PDT 2022
+Word has been entered by user.
+
+Thu Mar 31 22:37:38 PDT 2022
+Word has been solved.

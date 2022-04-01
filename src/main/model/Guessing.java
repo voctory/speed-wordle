@@ -40,6 +40,7 @@ public class Guessing implements Writable {
     public void setChosenWord(String chosenWord) {
         this.chosenWord = chosenWord;
         this.chosenWordLetters = stringToArrayList(chosenWord);
+        EventLog.getInstance().logEvent(new Event("Set chosen word to " + chosenWord + "."));
     }
 
     // EFFECTS: getter for chosen word

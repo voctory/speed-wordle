@@ -21,7 +21,7 @@ import javax.swing.Timer;
 //
 // SOURCE: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
 public class WordAppMain extends JFrame {
-    private static final String JSON_STORE = "./data/history.json";
+    public static final String JSON_STORE = "./data/history.json";
     private static final int INTERVAL = 20;
     private WordGame game;
     private GamePanel gp;
@@ -101,9 +101,8 @@ public class WordAppMain extends JFrame {
             jsonWriter.open();
             jsonWriter.write(game.toJson());
             jsonWriter.close();
-            System.out.println("Saved current game to " + JSON_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            jsonWriter.error();
         }
     }
 
@@ -112,9 +111,8 @@ public class WordAppMain extends JFrame {
     private void loadGame() {
         try {
             jsonReader.read();
-            System.out.println("Loaded old game from " + JSON_STORE);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            jsonReader.error();
         }
     }
 

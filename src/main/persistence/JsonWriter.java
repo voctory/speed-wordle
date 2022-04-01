@@ -1,7 +1,10 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.Guessing;
 import org.json.JSONObject;
+import ui.WordAppMain;
 
 
 import java.io.*;
@@ -24,12 +27,14 @@ public class JsonWriter {
     // be opened for writing
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
+        EventLog.getInstance().logEvent(new Event("Opening and writing to " + WordAppMain.JSON_STORE));
     }
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of guessing game to file
     public void write(JSONObject gameState) {
         saveToFile(gameState.toString(TAB));
+        EventLog.getInstance().logEvent(new Event("Saved current game to " + WordAppMain.JSON_STORE));
     }
 
     // MODIFIES: this
@@ -42,5 +47,10 @@ public class JsonWriter {
     // EFFECTS: writes string to file
     private void saveToFile(String json) {
         writer.print(json);
+    }
+
+    // EFFECTS: collects error and logs it
+    public void error() {
+        EventLog.getInstance().logEvent(new Event("Unable to write to file: " + WordAppMain.JSON_STORE));
     }
 }

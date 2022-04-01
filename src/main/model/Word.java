@@ -23,6 +23,7 @@ public class Word {
         this.wordHistory = wh;
         this.stillGuessing = false;
         wordInitializer();
+        EventLog.getInstance().logEvent(new Event("Word added to history: " + word));
     }
 
     // MODIFIES: this
@@ -124,15 +125,19 @@ public class Word {
         if (Character.isLetter((char) keyCode) && letters.size() < 5) {
             word += Character.toLowerCase((char) keyCode);
             wordInitializer();
+            EventLog.getInstance().logEvent(new Event("Letter added to word: " + (char) keyCode));
         } else if (keyCode == 8 && word.length() > 0) {
             word = word.substring(0, word.length() - 1);
+            EventLog.getInstance().logEvent(new Event("Letter removed from word."));
             wordInitializer();
         } else if (keyCode == 10 && letters.size() == 5) {
-
             // check if the words are equal
+            EventLog.getInstance().logEvent(new Event("Word has been entered by user."));
             if (getWordsAreEqual()) {
+                EventLog.getInstance().logEvent(new Event("Word has been solved."));
                 this.stillGuessing = false;
             } else {
+                EventLog.getInstance().logEvent(new Event("Word is incorrect."));
                 Word nowGuessedWord = new Word(word, letters, actualWord, wordHistory);
                 wordHistory.addToHistory(nowGuessedWord);
                 this.word = "";

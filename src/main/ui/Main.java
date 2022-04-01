@@ -1,5 +1,7 @@
 package ui;
 
+import model.EventLog;
+
 import java.io.FileNotFoundException;
 
 // Start the program and GUI here!
@@ -11,7 +13,14 @@ public class Main {
         try {
             new WordAppMain();
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to run Speed Wordle: storage file not found");
+            e.printStackTrace();
         }
+
+        // EFFECTS: prints the event log to the console on shutdown
+        // SOURCE: https://www.baeldung.com/jvm-shutdown-hooks
+        Thread printingHook = new Thread(() -> {
+            EventLog.getInstance().iterator().forEachRemaining(System.out::println);
+        });
+        Runtime.getRuntime().addShutdownHook(printingHook);
     }
 }

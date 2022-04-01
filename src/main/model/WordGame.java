@@ -57,6 +57,8 @@ public class WordGame implements Writable {
 
         // restore solve timer from JSON, convert into long
         solveTimer = new SolveTimer(json.getLong("timeElapsed"));
+
+        EventLog.getInstance().logEvent(new Event("All properties of WordGame have been restored from JSON"));
     }
 
     // MODIFIES: this
@@ -97,13 +99,13 @@ public class WordGame implements Writable {
     // MODIFIES: this
     // EFFECTS:  clears list of game objects (words)
     public void restartGame() {
-        // TODO: duplicated code from setUp()
         isGameOver = false;
         wordHistory = new WordHistory();
         actualWord = new Guessing(wordHistory);
         // use an empty string as the current guess
         currentGuess = new Word("", actualWord, wordHistory);
         solveTimer = new SolveTimer();
+        EventLog.getInstance().logEvent(new Event("Game has been restarted."));
     }
 
     public String getTimeElapsed() {
@@ -132,6 +134,7 @@ public class WordGame implements Writable {
         // convert word history to JSON with GSON
 
         json.put("wordHistory", wordHistory.toJson());
+        EventLog.getInstance().logEvent(new Event("Game state has been converted to JSON."));
         return json;
     }
 }

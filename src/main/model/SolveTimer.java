@@ -9,6 +9,7 @@ public class SolveTimer {
     // EFFECT: set time to system's time in milliseconds for time comparisons
     public SolveTimer() {
         time = System.currentTimeMillis();
+        EventLog.getInstance().logEvent(new Event("Instantiate timer."));
     }
 
     // Constructor for restoring time
@@ -16,6 +17,7 @@ public class SolveTimer {
     // EFFECT: set time to given time from persistence
     public SolveTimer(long time) {
         this.time = time;
+        EventLog.getInstance().logEvent(new Event("Restore timer to " + getTimeElapsed()));
     }
 
     // MODIFIES: this
