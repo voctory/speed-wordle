@@ -151,11 +151,11 @@ Thu Mar 31 22:37:38 PDT 2022
 Word has been solved.
 
 ## Phase 4 - Task 3
-- I would reduce the coupling of WordGame's dependencies. E.g. A word does not need to know about 4 different model 
+- I would reduce the coupling of WordGame's dependencies. E.g. A word does not need to know about 5 different model 
 class objects at once, it should be able to obtain that from WordGame.
 - I would improve the cohesion of JsonWriter and JsonReader: some of largest persistence methods related to JsonWriter 
 and JsonReader are mainly located in WordAppMain, but they should be moved to JsonWriter and JsonReader.
-- Writable interface seems underutilized by WordGame, possibly useless.
+- Writable interface seems underutilized by WordGame, possibly useless in this context.
 - Not many uses of interfaces or abstract classes throughout the entire design. Could have been used in model classes
 that have similar method names and signatures (e.g. there are multiple toJson methods).
 
