@@ -12,7 +12,6 @@ import java.util.Random;
 public class Guessing implements Writable {
     private String chosenWord;
     private ArrayList<String> chosenWordLetters;
-    private transient WordHistory wordHistory;
 
     private static final int WORD_LENGTH = 5;
     private static final List<String> WORD_LIST = Arrays.asList(
@@ -32,7 +31,6 @@ public class Guessing implements Writable {
     public Guessing(WordHistory wh) {
         Random rand = new Random();
         setChosenWord(WORD_LIST.get(rand.nextInt(WORD_LIST.size())));
-        this.wordHistory = wh;
     }
 
     // MODIFIES: this
@@ -85,6 +83,5 @@ public class Guessing implements Writable {
         // find wordHistory in JSON and set it as the wordHistory
         chosenWord = actualWord;
         chosenWordLetters = stringToArrayList(chosenWord);
-        wordHistory = wh;
     }
 }
