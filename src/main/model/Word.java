@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// class that represents a word and its letters for a Wordle game
 public class Word {
     private String word;
     private List<Letter> letters;
@@ -14,7 +15,8 @@ public class Word {
     private boolean stillGuessing;
     private transient WordHistory wordHistory;
 
-    // for generating guessed words
+    // MODIFIES: this
+    // EFFECTS: constructor for generating already guessed words (in the WordHistory)
     public Word(String word, List<Letter> letters, Guessing actualWord, WordHistory wh) {
         this.word = word;
         this.actualWord = actualWord;
@@ -23,7 +25,8 @@ public class Word {
         wordInitializer();
     }
 
-    // for generating new words; has no letters parameter
+    // MODIFIES: this
+    // EFFECTS: for generating new words (i.e. currently guessing)
     public Word(String word, Guessing actualWord, WordHistory wh) {
         this.word = word;
         this.wordHistory = wh;
@@ -32,11 +35,15 @@ public class Word {
         wordInitializer();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the letters of the word
     private void wordInitializer() {
         this.letters = new ArrayList<>(word.length());
         deconstructWord();
     }
 
+    // MODIFIES: this
+    // EFFECTS: deconstructs the word into letters
     private void deconstructWord() {
         Map<String, Integer> hashMap = actualWordHashMap();
         for (int i = 0; i < word.length(); i++) {
@@ -44,24 +51,21 @@ public class Word {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns the hashmap of the actual word
     private Map<String, Integer> actualWordHashMap() {
         HashMap<String, Integer> hashMap = new HashMap<>();
         String[] words = actualWord.getChosenWord().split("");
 
         // Init hashmaps for all the letters in the actual word
         for (String actualLetter : words) {
-
-            // Asking whether the HashMap contains the key or not. Will return null if not.
-
-            // Storing the letter as key and its
-            // occurrence as value in the HashMap.
-            // Incrementing the value if the word
-            // is already present in the HashMap.
             hashMap.merge(actualLetter, 1, Integer::sum);
         }
         return hashMap;
     }
 
+    // MODIFIES: this
+    // EFFECTS: determines the color of the letter
     private Color determineColor(char letter, int index, Map<String, Integer> hashMap) {
         // SOURCE: Wordle hashmap logic
         // SOURCE: https://www.geeksforgeeks.org/java-program-to-find-the-occurrence-of-words-in-a-string-using-hashmap/
@@ -76,37 +80,45 @@ public class Word {
         } else if (letter == actualWord.getChosenWord().charAt(index)) {
             hashMap.put(Character.toString(letter), integer - 1);
             return Color.GREEN;
-        } else if (actualWord.getChosenWord().contains("" + letter) && indexIsNotNull && letterStillRemains) {
+        } else if (letterStillRemains) {
             hashMap.put(Character.toString(letter), integer - 1);
             return Color.YELLOW;
         }
         return Color.DARK_GRAY;
     }
 
+    // EFFECTS: getter to return the word
     public String getWord() {
         return word;
     }
 
+    // EFFECTS: setter to change the word
     public void setWord(String word) {
         this.word = word;
     }
 
+    // EFFECTS: getter to return the letters in a list
     public List<Letter> getLetters() {
         return letters;
     }
 
+    // EFFECTS: setter to remove all letters
     public void clear() {
         letters.clear();
     }
 
+    // EFFECTS: checker to compare the actual word with the current guess
     private boolean getWordsAreEqual() {
         return actualWord.getChosenWord().equals(word);
     }
 
+    // EFFECTS: getter to return the guessing state of the current Word
     public boolean isWordSolved() {
-        return !stillGuessing && getWordsAreEqual();
+        return !stillGuessing;
     }
 
+    // MODIFIES: this
+    // EFFECTS: direct interface to type letters, delete letters, or enter to check if the word is solved
     public void keyPressed(int keyCode) {
         // validate keyCode is a letter
         if (Character.isLetter((char) keyCode) && letters.size() < 5) {

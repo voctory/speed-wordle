@@ -15,8 +15,6 @@ public class Guessing implements Writable {
     private transient WordHistory wordHistory;
 
     private static final int WORD_LENGTH = 5;
-
-    // This list can be massively expanded on with data imports during Phase 2.
     private static final List<String> WORD_LIST = Arrays.asList(
             "which", "whose", "there", "their", "about", "would", "these",
             "other", "words", "could", "write", "first", "water", "after");
@@ -37,20 +35,19 @@ public class Guessing implements Writable {
         this.wordHistory = wh;
     }
 
-    // used for JUnit Tests and restoring previous word of game states
     // MODIFIES: this
-    // EFFECTS: setter for chosen word and separates the letters
+    // EFFECTS: setter for chosen word and to decompose the letters
     public void setChosenWord(String chosenWord) {
         this.chosenWord = chosenWord;
         this.chosenWordLetters = stringToArrayList(chosenWord);
     }
 
-    // EFFECTS: getter for chosen word; used for JUnit tests
+    // EFFECTS: getter for chosen word
     public String getChosenWord() {
         return chosenWord;
     }
 
-    // EFFECTS: getter for chosen word characters array list; used for JUnit tests
+    // EFFECTS: getter for chosen word characters array list
     public ArrayList<String> getChosenWordLetters() {
         return chosenWordLetters;
     }
@@ -60,7 +57,6 @@ public class Guessing implements Writable {
         // cannot check isValid in Phase 1 of the project; will need to import text file data
         return guess.length() == WORD_LENGTH;
     }
-
 
     // EFFECTS: getter to check if the user's guess was correct; if it was, return true. otherwise, false.
     public boolean isCorrect(String guess) {
@@ -74,11 +70,14 @@ public class Guessing implements Writable {
         return new ArrayList<>(Arrays.asList(split));
     }
 
+    // EFFECTS: indicates that Guessing is transient, not to be saved to file directly (hence, null)
     @Override
     public JSONObject toJson() {
         return null;
     }
 
+    // MODIFIES: this
+    // EFFECTS: restores the WordHistory and the chosen word from a restored game state
     public void fromJson(String actualWord, WordHistory wh) {
         // find chosenWord in JSON and set it as the chosenWord
         // find chosenWordLetters in JSON and set it as the chosenWordLetters

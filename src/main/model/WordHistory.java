@@ -29,7 +29,6 @@ public class WordHistory {
         trimHistory();
     }
 
-    // REQUIRES: history is not empty
     // MODIFIES: this
     // EFFECTS: limit history size to 10, remove oldest word
     private void trimHistory() {
@@ -44,10 +43,13 @@ public class WordHistory {
         return gson.toJson(history);
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears the history once a game is over
     public void clear() {
         history.clear();
     }
 
+    // EFFECTS: returns the history of guessed words as an immutable array list
     public ArrayList<Word> getImmutableWordHistory() {
         return new ArrayList<>(history);
     }

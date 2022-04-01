@@ -17,11 +17,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-/*
- * Represents the main window in which the space invaders
- * game is played
- */
 
+//
 // SOURCE: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
 public class WordAppMain extends JFrame {
     private static final String JSON_STORE = "./data/history.json";
@@ -34,8 +31,8 @@ public class WordAppMain extends JFrame {
     private JsonReader jsonReader;
     private HelpButton hlpBtn;
 
-    // Constructs main window
-    // effects: sets up window in which Space Invaders game will be played
+    // MODIFIES: this (JFrame)
+    // EFFECTS: sets up window in which Speed Wordle will be played
     public WordAppMain() throws FileNotFoundException {
         super("Speed Wordle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,8 +48,6 @@ public class WordAppMain extends JFrame {
         add(sp, BorderLayout.NORTH);
         add(kp, BorderLayout.SOUTH);
         addKeyListener(new KeyHandler());
-
-
         pack();
         centreOnScreen();
         setVisible(true);
@@ -61,9 +56,7 @@ public class WordAppMain extends JFrame {
         jsonReader = new JsonReader(JSON_STORE, game);
     }
 
-    // Set up timer
-    // modifies: none
-    // effects:  initializes a timer that updates game each
+    // EFFECTS:  initializes a timer that updates game each
     //           INTERVAL milliseconds
     private void addTimer() {
         Timer t = new Timer(INTERVAL, ae -> {
@@ -78,16 +71,15 @@ public class WordAppMain extends JFrame {
     }
 
     // Centres frame on desktop
-    // modifies: this
-    // effects:  location of frame is set so frame is centred on desktop
+    // MODIFIES: this
+    // EFFECTS:  location of frame is set so frame is centred on desktop
     private void centreOnScreen() {
         Dimension scrn = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((scrn.width - getWidth()) / 2, (scrn.height - getHeight()) / 2);
     }
 
-    /*
-     * A key handler to respond to key events
-     */
+    // MODIFIES: this
+    // EFFECTS: handles key presses
     private class KeyHandler extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
@@ -95,10 +87,8 @@ public class WordAppMain extends JFrame {
                 game.restartGame();
             } else if (e.getKeyCode() == KeyEvent.VK_SHIFT && !game.isOver()) {
                 saveGame();
-                System.out.println("Saved game");
             } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !game.isOver()) {
                 loadGame();
-                System.out.println("Loaded game");
             } else {
                 game.keyPressed(e.getKeyCode());
             }
@@ -128,9 +118,7 @@ public class WordAppMain extends JFrame {
         }
     }
 
-    /*
-     * Play the game
-     */
+    // EFFECTS: starts the game
     public static void main(String[] args) throws FileNotFoundException {
         new WordAppMain();
     }

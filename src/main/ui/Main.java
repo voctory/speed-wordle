@@ -2,6 +2,7 @@ package ui;
 
 import java.io.FileNotFoundException;
 
+// Start the program and GUI here!
 public class Main {
     // EFFECTS: initializes the app
     public static void main(String[] args) {
@@ -10,7 +11,7 @@ public class Main {
         try {
             new WordAppMain();
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to run MOTUS: storage file not found");
+            System.out.println("Unable to run Speed Wordle: storage file not found");
         }
     }
 }
